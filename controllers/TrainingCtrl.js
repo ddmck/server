@@ -11,7 +11,7 @@ var numQuestions = {
   calculus: 3,
   esl: 3,
   planning: 4,
-  essay: 3,
+  essays: 3,
   application: 2,
   biology: 1,
   chemistry: 2
@@ -43,7 +43,6 @@ function shuffle(origArray) {
 module.exports = {
   getQuestions: function(options, callback){
     var subcategories = Question.getSubcategories(options.category);
-
     Question.find({ 'category': options.category }, function(err, questions) {
       if (err){
         return callback(err);
@@ -67,10 +66,9 @@ module.exports = {
         subcategories.map(function(subcategory) {
           var questions = questionsBySubcategory[subcategory];
           questions = shuffle(questions);
-          var minQuestions = Math.min(questions.length,numQuestions[options.category])
+          var minQuestions = Math.min(questions.length,numQuestions[options.category]);
           randomQuestions = randomQuestions.concat(questions.slice(0, minQuestions));
         });
-
         randomQuestions = shuffle(randomQuestions);
         return callback(null, randomQuestions);
       }
